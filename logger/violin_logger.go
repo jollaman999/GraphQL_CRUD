@@ -5,7 +5,6 @@ import (
 	"io"
 	"log"
 	"os"
-	"os/exec"
 	"sync"
 	"time"
 )
@@ -15,22 +14,23 @@ var Logger *log.Logger
 var once sync.Once
 var FpLog *os.File
 
+func createDirIfNotExist(dir string) {
+	if _, err := os.Stat(dir); os.IsNotExist(err) {
+		err = os.MkdirAll(dir, 0755)
+		if err != nil {
+			panic(err)
+		}
+	}
+}
+
 func Prepare() bool {
 	return_value := false
 
 	once.Do(func() {
 		// Check violin logger directory
-		// Run mkdir if not exist
+		// Create directory if not exist
 		if _, err := os.Stat("/var/log/" + Log_name); os.IsNotExist(err) {
-			cmd := exec.Command("mkdir", "-p", "/var/log/" + Log_name + "/")
-			err := cmd.Start()
-			if err != nil {
-				fmt.Println("Failed to create logger directory!")
-				return_value = false
-			}
-
-			// Wait for create directory
-			_ = cmd.Wait()
+			createDirIfNotExist("/var/log/" + Log_name)
 		}
 
 		now := time.Now()
