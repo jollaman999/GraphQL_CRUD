@@ -1,0 +1,130 @@
+///// user
+// list
+http://localhost:8001/graphql?query={list_user{id,name}}
+// read
+http://localhost:8001/graphql?query={user(id:"test1"){id,name}}
+// create
+http://localhost:8001/graphql?query=mutation+_{create_user(id:"test1",name:"1"){id,name}}
+// update
+http://localhost:8001/graphql?query=mutation+_{update_user(id:"test1",name:"11"){id,name}}
+// delete
+http://localhost:8001/graphql?query=mutation+_{delete_user(id:"test1"){id}}
+
+//// server
+// list
+http://localhost:8001/graphql?query={list_server{uuid,server_name,server_disc,cpu,memory,disk_size,created}}
+// read
+http://localhost:8001/graphql?query={server(uuid:"[uuid]"){uuid,server_name,server_disc,cpu,memory,disk_size,created}}
+http://localhost:8001/graphql?query={server(uuid:%221df0383a-b83f-434a-ac7e-6e56c65cbe62%22){uuid,server_name,server_disc,cpu,memory,disk_size,created}}
+// create
+http://localhost:8001/graphql?query=mutation+_{create_server(server_name:"ish",server_disc:"ish server",cpu:12,memory:16384,disk_size:1024000){uuid,server_name,server_disc,cpu,memory,disk_size,created}}
+// update
+http://localhost:8001/graphql?query=mutation+_{update_server(uuid:"[uuid]",server_name:"ish",server_disc:"ish server",cpu:12,memory:16384,disk_size:1024000){uuid,server_name,server_disc,cpu,memory,disk_size}}
+// delete
+http://localhost:8001/graphql?query=mutation+_{delete_server(uuid:"[uuid]"){uuid}}
+
+
+///////// GraphQL
+http://localhost:8001/graphql
+
+//// user
+// list
+query List_User {
+  list_user {
+    id
+    name
+  }
+}
+
+// read
+query Select_User {
+  user(id: "test1") {
+    id
+    name
+  }
+}
+
+// create
+mutation Create_User {
+  create_user(id: "test1", name: "1") {
+    id
+    name
+  }
+}
+
+// update
+mutation Update_User {
+  update_user(id: "test1", name: "11") {
+    id
+    name
+  }
+}
+
+// delete
+mutation Delete_User {
+  delete_user(id: "test1") {
+    id
+  }
+}
+
+//// server
+// list
+query List_Server {
+  list_server {
+    uuid
+    server_name
+    server_disc
+    cpu
+    memory
+    disk_size
+    created
+  }
+}
+
+// read
+query Select_Server {
+  server(uuid: "[uuid]") {
+    uuid
+    server_name
+    server_disc
+    cpu
+    memory
+    disk_size
+    created
+  }
+}
+
+// create
+mutation Create_Server {
+  create_server(server_name: "ish", server_disc: "ish server", cpu: 12, memory: 16384, disk_size: 1024000) {
+    uuid
+    server_name
+    server_disc
+    cpu
+    memory
+    disk_size
+    created
+  }
+}
+
+// update
+mutation Update_Server {
+  update_server(uuid: "[uuid]", server_name: "ish", server_disc: "ish server", cpu: 12, memory: 16384, disk_size: 1024000) {
+    uuid
+    server_name
+    server_disc
+    cpu
+    memory
+    disk_size
+  }
+}
+
+// delete
+mutation Delete_Server {
+  delete_server(uuid: "[uuid]") {
+    uuid
+  }
+}
+
+
+
