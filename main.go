@@ -4,10 +4,15 @@ import (
 	"./graphql_util"
 	"./logger"
 	"./mysql_util"
+	"./root_util"
 	"net/http"
 )
 
 func main() {
+	if !root_util.Check_root() {
+		return
+	}
+
 	if !logger.Prepare() {
 		return
 	}
